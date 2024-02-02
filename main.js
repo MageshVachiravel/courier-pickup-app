@@ -46,11 +46,32 @@ form.addField("#pickup-area",[
     }
 ])
 
+
 form.onSuccess((e) => {
 
     const formData = new FormData(formEl);
 
-    for (let value of formData.values()){
-        console.log(value)
+    const formValueObj = Object.fromEntries(formData.entries())
+
+    const newUserDetails = [];
+    // get existing details from localStorage
+    const existingUserDetails = localStorage.getItem("userDetails");
+
+    if(existingUserDetails){
+        // parse the value into obj/arr
+        const existingUserObj = JSON.parse(existingUserDetails);
+    
+        // push the value to created obj
+        existingUserObj.push(formValueObj)
+
+        localStorage.setItem("userDetails",JSON.stringify(existingUserObj))
+    }else{
+        newUserDetails.push(formValueObj)
+
+        localStorage.setItem("userDetails",JSON.stringify(newUserDetails))
     }
+
+    alert("courier request submitted successfully");
+
+    formEl.reset()
 })
