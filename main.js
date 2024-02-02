@@ -75,6 +75,10 @@ form.onSuccess((e) => {
     alert("courier request submitted successfully");
 
     formEl.reset()
+
+    
+
+getAllCourierDatas()
 })
 
 
@@ -84,28 +88,29 @@ function getAllCourierDatas(){
     const userDataArr = JSON.parse(userData);
 
     const userCount = document.querySelector("#courierCount")
-    userCount.innerHTML = userDataArr.length;
+   
 
     console.log(userDataArr)
 
-    // write those data in ui
-    const tableBody = document.querySelector("#courierDataTable")
+   if(userDataArr){
+     userCount.innerHTML = userDataArr.length;
+     // write those data in ui
+     const tableBody = document.querySelector("#courierDataTable")
 
-    userDataArr.map((data,index)=>{
-        const newTr = `
-            <tr>
-            <td class="px-2 py-1 border">${index+1}</td>
-            <td class="px-2 py-1 border">${data.name}</td>
-            <td class="px-2 py-1 border">${data.mobile}</td>
-            <td class="px-2 py-1 border">${data['pickup-date']}</td>
-            <td class="px-2 py-1 border">${data['pickup-area']}</td>
-            <td class="px-2 py-1 border"><button class="bg-red-500 text-white px-2 py-1 rounded text-sm hover:bg-red-600">Delete</button></td>
-            </tr>
-    `
-
-    tableBody.innerHTML += newTr;
-    })
+     userDataArr.map((data,index)=>{
+         const newTr = `
+             <tr>
+             <td class="px-2 py-1 border">${index+1}</td>
+             <td class="px-2 py-1 border">${data.name}</td>
+             <td class="px-2 py-1 border">${data.mobile}</td>
+             <td class="px-2 py-1 border">${data['pickup-date']}</td>
+             <td class="px-2 py-1 border">${data['pickup-area']}</td>
+             <td class="px-2 py-1 border"><button class="bg-red-500 text-white px-2 py-1 rounded text-sm hover:bg-red-600">Delete</button></td>
+             </tr>
+     `
+ 
+     tableBody.innerHTML += newTr;
+     })
+   }
     
 }
-
-getAllCourierDatas()
