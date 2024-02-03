@@ -1,5 +1,5 @@
 import JustValidate from 'just-validate';
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import { v4 as uuidv4 } from 'uuid';
 const formEl = document.querySelector("#courier-request-form")
 
