@@ -1,6 +1,7 @@
+import JustValidate from 'just-validate';
+import * as dayjs from "dayjs";
 const formEl = document.querySelector("#courier-request-form")
 
-import JustValidate from 'just-validate';
 
 const form = new JustValidate(formEl,{
     validateBeforeSubmitting: true,
@@ -123,13 +124,13 @@ function getAllCourierDatas(){
         td3El.innerText = data.mobile
 
         td4El.classList.add("px-2","px-1","border")
-        td4El.innerText = data['pickup-date']
+        td4El.innerText = dayjs(data['pickup-date']).format("DD, MM - YYYY, hh:mma")
 
         td5El.classList.add("px-2","px-1","border")
         td5El.innerText = data['pickup-area']
 
         deleteBtn.classList.add("bg-red-500","px-2","py-1","text-white","text-sm","rounded")
-        deleteBtn.innerText = "Delete"
+        deleteBtn.innerText = "Delete"  
 
         td6El.classList.add("px-2","py-1","border")
         td6El.append(deleteBtn)
@@ -163,6 +164,8 @@ function getAllCourierDatas(){
 }
 
 
-
 getAllCourierDatas()
+
+
+
 
