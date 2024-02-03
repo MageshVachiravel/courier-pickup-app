@@ -77,8 +77,6 @@ form.onSuccess((e) => {
     formEl.reset()
 
     
-
-getAllCourierDatas()
 })
 
 
@@ -89,28 +87,73 @@ function getAllCourierDatas(){
 
     const userCount = document.querySelector("#courierCount")
    
+    const tableBody = document.querySelector("#courierDataTable")
 
     console.log(userDataArr)
+
+    const newFinalValue = []
 
    if(userDataArr){
      userCount.innerHTML = userDataArr.length;
      // write those data in ui
-     const tableBody = document.querySelector("#courierDataTable")
 
-     userDataArr.map((data,index)=>{
-         const newTr = `
-             <tr>
-             <td class="px-2 py-1 border">${index+1}</td>
-             <td class="px-2 py-1 border">${data.name}</td>
-             <td class="px-2 py-1 border">${data.mobile}</td>
-             <td class="px-2 py-1 border">${data['pickup-date']}</td>
-             <td class="px-2 py-1 border">${data['pickup-area']}</td>
-             <td class="px-2 py-1 border"><button class="bg-red-500 text-white px-2 py-1 rounded text-sm hover:bg-red-600">Delete</button></td>
-             </tr>
-     `
- 
-     tableBody.innerHTML += newTr;
+     document.querySelector("#courierCard").classList.remove("hidden")
+     
+     const newTr = userDataArr.map((data,index)=>{
+
+        const tr = document.createElement("tr")
+        const tdEl = document.createElement("td")
+        const td2El = document.createElement("td")
+        const td3El = document.createElement("td")
+        const td4El = document.createElement("td")
+        const td5El = document.createElement("td")
+        const td6El = document.createElement("td")
+        const deleteBtn = document.createElement("button")
+
+        tdEl.classList.add("px-2","px-1","border")
+        tdEl.innerText = index+1
+
+        td2El.classList.add("px-2","px-1","border")
+        td2El.innerText = data.name
+
+        td3El.classList.add("px-2","px-1","border")
+        td3El.innerText = data.mobile
+
+        td4El.classList.add("px-2","px-1","border")
+        td4El.innerText = data['pickup-date']
+
+        td5El.classList.add("px-2","px-1","border")
+        td5El.innerText = data['pickup-area']
+
+        deleteBtn.classList.add("bg-red-500")
+        deleteBtn.innerText = "Delete"
+
+        td6El.classList.add("px-2","py-1","border")
+        td6El.append(deleteBtn)
+
+        td6El.addEventListener("click",(e)=>{
+            e.target.parentNode.parentNode.remove()
+        })
+
+
+        tr.append(tdEl,td2El,td3El,td4El,td5El,td6El)
+
+        console.log(tr)
+
+        newFinalValue.push(tr)
+
      })
-   }
+
+
+     newFinalValue.forEach((el) => tableBody.append(el))
+
     
+
+
+   }
 }
+
+
+
+getAllCourierDatas()
+
