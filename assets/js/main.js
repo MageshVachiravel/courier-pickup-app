@@ -55,6 +55,7 @@ form.onSuccess((e) => {
     const formValueObj = Object.fromEntries(formData.entries())
 
     const newUserDetails = [];
+
     // get existing details from localStorage
     const existingUserDetails = localStorage.getItem("userDetails");
 
@@ -83,6 +84,7 @@ form.onSuccess((e) => {
 function getAllCourierDatas(){
     // get the data from local storage
     const userData = localStorage.getItem("userDetails");
+
     const userDataArr = JSON.parse(userData);
 
     const userCount = document.querySelector("#courierCount")
@@ -94,7 +96,8 @@ function getAllCourierDatas(){
     const newFinalValue = []
 
    if(userDataArr){
-     userCount.innerHTML = userDataArr.length;
+    let userLength = userDataArr.length;
+     userCount.innerHTML = userLength;
      // write those data in ui
 
      document.querySelector("#courierCard").classList.remove("hidden")
@@ -125,14 +128,20 @@ function getAllCourierDatas(){
         td5El.classList.add("px-2","px-1","border")
         td5El.innerText = data['pickup-area']
 
-        deleteBtn.classList.add("bg-red-500")
+        deleteBtn.classList.add("bg-red-500","px-2","py-1","text-white","text-sm","rounded")
         deleteBtn.innerText = "Delete"
 
         td6El.classList.add("px-2","py-1","border")
         td6El.append(deleteBtn)
 
         td6El.addEventListener("click",(e)=>{
-            e.target.parentNode.parentNode.remove()
+           let deleteConfirm =  confirm(`Do you want to delete ${data.name} record?`)
+            if(deleteConfirm){
+                e.target.parentNode.parentNode.remove();
+                userLength = userLength - 1
+                userCount.innerHTML = userLength;
+            }
+
         })
 
 
