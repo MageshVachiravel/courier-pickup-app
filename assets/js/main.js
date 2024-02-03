@@ -101,12 +101,14 @@ function getAllCourierDatas(){
 
     const newFinalValue = []
 
-   if(userDataArr){
+   if(userDataArr && userDataArr.length > 0){
     let userLength = userDataArr.length;
      userCount.innerHTML = userLength;
      // write those data in ui
 
      document.querySelector("#courierCard").classList.remove("hidden")
+
+     
      
      const newTr = userDataArr.map((data,index)=>{
 
@@ -143,9 +145,18 @@ function getAllCourierDatas(){
         td6El.addEventListener("click",(e)=>{
            let deleteConfirm =  confirm(`Do you want to delete ${data.name} record?`)
             if(deleteConfirm){
-                e.target.parentNode.parentNode.remove();
                 userLength = userLength - 1
                 userCount.innerHTML = userLength;
+
+                const existingUserDetails = localStorage.getItem("userDetails")
+                const existingUserArr = JSON.parse(existingUserDetails)
+
+                const otherRecords = existingUserArr.filter(record => record.id != data.id)
+
+                localStorage.setItem("userDetails",JSON.stringify(otherRecords))
+
+
+                getAllCourierDatas();
             }
 
         })
@@ -158,14 +169,13 @@ function getAllCourierDatas(){
         newFinalValue.push(tr)
 
      })
-
-
      newFinalValue.forEach((el) => tableBody.append(el))
 
-    
-
-
    }
+   else{
+    document.querySelector("#courierCard").classList.add("hidden")
+   }
+
 }
 
 
