@@ -1,5 +1,6 @@
 import JustValidate from 'just-validate';
 import * as dayjs from "dayjs";
+import { v4 as uuidv4 } from 'uuid';
 const formEl = document.querySelector("#courier-request-form")
 
 
@@ -53,6 +54,8 @@ form.onSuccess((e) => {
 
     const formData = new FormData(formEl);
 
+    formData.append("id",uuidv4());
+
     const formValueObj = Object.fromEntries(formData.entries())
 
     const newUserDetails = [];
@@ -75,6 +78,7 @@ form.onSuccess((e) => {
     }
 
     alert("courier request submitted successfully");
+    getAllCourierDatas();
 
     formEl.reset()
 
@@ -92,6 +96,7 @@ function getAllCourierDatas(){
    
     const tableBody = document.querySelector("#courierDataTable")
 
+    tableBody.innerHTML = '';
     console.log(userDataArr)
 
     const newFinalValue = []
@@ -129,7 +134,7 @@ function getAllCourierDatas(){
         td5El.classList.add("px-2","px-1","border")
         td5El.innerText = data['pickup-area']
 
-        deleteBtn.classList.add("bg-red-500","px-2","py-1","text-white","text-sm","rounded")
+        deleteBtn.classList.add("bg-red-500","hover:bg-red-700","px-2","py-1","text-white","text-sm","rounded")
         deleteBtn.innerText = "Delete"  
 
         td6El.classList.add("px-2","py-1","border")
